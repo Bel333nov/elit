@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAVI•ESTATE — Новостройки</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font close to BI style: Manrope + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --pad: 10px;
+      --r-xl: 28px;
+      --r-lg: 22px;
+    }
+
+    /* Background: light & clean */
+    body{
+      font-family: "Manrope","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:#0f172a;
+      background:
+        radial-gradient(900px 480px at 18% -10%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(800px 420px at 90% 0%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 55%),
+        linear-gradient(180deg, #F8FAFC 0%, #F3F4F6 40%, #F3F4F6 100%);
+    }
+
+    .container-wide{ width:100%; padding:0 var(--pad); }
+    .hairline{ border-color: rgba(15,23,42,0.10); }
+
+    /* Glass */
+    .glass{
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 26px rgba(15,23,42,0.10);
+    }
+    .glass-dark{
+      background: rgba(2,6,23,0.36);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Hero overlay */
+    .hero-overlay{
+      background:
+        radial-gradient(900px 520px at 20% 0%, rgba(59,130,246,0.18) 0%, rgba(2,6,23,0.0) 55%),
+        radial-gradient(760px 480px at 85% 10%, rgba(99,102,241,0.14) 0%, rgba(2,6,23,0.0) 58%),
+        linear-gradient(180deg, rgba(2,6,23,0.28) 0%, rgba(2,6,23,0.66) 58%, rgba(2,6,23,0.38) 100%);
+    }
+
+    /* Hero title smaller + centered */
+    .hero-title{
+      font-size: clamp(18px, 2.6vw, 36px);
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 10px 30px rgba(2,6,23,0.55);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* SEO under title (optional) */
+    .hero-seo{
+      margin-top: 10px;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.70);
+      font-weight: 600;
+      text-shadow: 0 10px 30px rgba(2,6,23,0.45);
+    }
+
+    /* Cards */
+    .card{
+      border-radius: var(--r-xl);
+      background:#fff;
+      box-shadow: 0 14px 30px rgba(15,23,42,0.07);
+      overflow:hidden;
+    }
+    .card-inner{ padding:14px; }
+
+    .media{
+      border-radius: var(--r-lg);
+      overflow:hidden;
+      background:#E5E7EB;
+      position:relative;
+      isolation:isolate;
+    }
+    .media::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,0.00) 0%, rgba(2,6,23,0.12) 100%);
+      z-index:1;
+      pointer-events:none;
+    }
+    .media img{
+      width:100%;
+      height: 210px;
+      object-fit: cover;
+      display:block;
+    }
+
+    /* top tags */
+    .tag-top{
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 11px;
+      line-height: 1;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      white-space: nowrap;
+      max-width: max-content;
+      z-index:2;
+    }
+
+    /* chips */
+    .chip{
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 9px 12px;
+      line-height: 1;
+      color:#0f172a;
+      background:#EFF6FF;
+      border: 1px solid rgba(15,23,42,0.06);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      white-space: nowrap;
+    }
+
+    /* typography */
+    .title{
+      margin-top: 12px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      color:#0b1220;
+      text-align:left;
+    }
+    .price{
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color:#2563eb;
+      text-align:left;
+      display:block;
+    }
+    .addr{
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(15,23,42,0.60);
+      text-align:left;
+    }
+    .stock{
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(15,23,42,0.72);
+      text-align:left;
+    }
+    .stock b{ color:#0f172a; font-weight: 800; }
+
+    .rooms{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .room{
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(15,23,42,0.16);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(15,23,42,0.86);
+    }
+    .room:hover{ background: rgba(15,23,42,0.03); }
+
+    .divider{ margin-top: 12px; border-top: 1px solid rgba(15,23,42,0.10); }
+    .handover{
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(15,23,42,0.78);
+      text-align:left;
+    }
+
+    /* featured card */
+    .featured{
+      background:
+        radial-gradient(900px 520px at 15% 0%, rgba(59,130,246,0.22) 0%, rgba(2,6,23,0.0) 55%),
+        radial-gradient(760px 480px at 85% 10%, rgba(99,102,241,0.18) 0%, rgba(2,6,23,0.0) 58%),
+        linear-gradient(180deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.985) 100%);
+    }
+    .featured .title{ color:#fff; }
+    .featured .price{ color:#93c5fd; }
+    .featured .addr{ color: rgba(255,255,255,0.68); }
+    .featured .stock{ color: rgba(255,255,255,0.76); }
+    .featured .stock b{ color:#fff; }
+    .featured .room{
+      border-color: rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.92);
+    }
+    .featured .room:hover{ background: rgba(255,255,255,0.06); }
+    .featured .divider{ border-top-color: rgba(255,255,255,0.14); }
+    .featured .handover{ color: rgba(255,255,255,0.80); }
+
+    /* Banner */
+    .banner-glass-wrap{
+      height: 450px;
+      border-radius: var(--r-xl);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(15,23,42,0.10);
+      box-shadow: 0 16px 36px rgba(15,23,42,0.10);
+      background: linear-gradient(135deg, rgba(15,23,42,0.08) 0%, rgba(15,23,42,0.03) 100%);
+    }
+    .banner-glass-wrap::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(520px 280px at 20% 30%, rgba(59,130,246,0.18) 0%, rgba(2,6,23,0) 60%),
+        radial-gradient(520px 280px at 80% 20%, rgba(99,102,241,0.14) 0%, rgba(2,6,23,0) 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.10) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      pointer-events:none;
+    }
+    .banner-glass-content{
+      position: relative;
+      height: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 24px;
+    }
+    .banner-glass-pill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      color: rgba(15,23,42,0.85);
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 12px 24px rgba(15,23,42,0.10);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .banner-glass-sub{
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(15,23,42,0.55);
+    }
+
+    /* Header spacing */
+    .header-inner{ max-width: 1400px; margin: 0 auto; padding: 0 var(--pad); }
+  </style>
+</head>
+
+<body>
+
+<header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b hairline">
+  <div class="header-inner">
+    <div class="flex items-center justify-between py-4">
+      <div class="flex items-center gap-10">
+        <a href="#" class="text-lg font-extrabold tracking-tight text-slate-900">NAVI•ESTATE</a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
+          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Новостройки</a>
+          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Районы</a>
+          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Застройщики</a>
+          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Акции</a>
+          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Контакты</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button class="hidden sm:inline-flex items-center justify-center h-11 w-11 rounded-full border hairline bg-white hover:bg-slate-50 transition">❤</button>
+        <button class="h-11 px-5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition">
+          Подобрать квартиру
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container-wide">
+
+  <!-- HERO (✅ shorter) -->
+  <section class="mt-4">
+    <div class="relative overflow-hidden rounded-[28px] border hairline">
+
+      <div class="absolute inset-0 bg-cover bg-center"
+           style="background-image:url('hero-bg.png');"></div>
+      <div class="absolute inset-0 hero-overlay"></div>
+
+      <div class="absolute top-4 left-4 z-20">
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-dark text-white text-sm font-semibold">
+          📍 Бишкек
+        </button>
+      </div>
+
+      <!-- ✅ less vertical padding so first cards are visible -->
+      <div class="relative z-10 px-6 md:px-12 py-10 md:py-12">
+        <h1 class="hero-title">Поиск премиальной недвижимости</h1>
+
+        <!-- optional seo -->
+        <div class="hero-seo">
+          Подбор новостроек в Бишкеке, Оше и на Ыссык-Куле: проверка документов, классы Комфорт+ / Бизнес / Премиум, цены и сроки сдачи.
+        </div>
+
+        <!-- FILTER -->
+        <div class="mt-7">
+          <div class="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-lg">
+
+            <!-- top row -->
+            <div class="grid grid-cols-1 md:grid-cols-12">
+              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <label class="block text-[11px] font-semibold text-slate-500">Город</label>
+                <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
+                  <option selected>Бишкек</option>
+                  <option>Ош</option>
+                  <option>Ыссык-Кол</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <label class="block text-[11px] font-semibold text-slate-500">Тип недвижимости</label>
+                <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
+                  <option selected>Квартиры</option>
+                  <option>Коммерческие помещения</option>
+                  <option>Танхаусы</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <label class="block text-[11px] font-semibold text-slate-500">Класс объекта</label>
+                <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
+                  <option selected>Комфорт+</option>
+                  <option>Бизнес</option>
+                  <option>Премиум</option>
+                  <option>Делюкс</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <label class="block text-[11px] font-semibold text-slate-500">Топ застройщики</label>
+                <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
+                  <option selected>Любой</option>
+                  <option>Застройщик 1</option>
+                  <option>Застройщик 2</option>
+                  <option>Застройщик 3</option>
+                  <option>Застройщик 4</option>
+                  <option>Застройщик 5</option>
+                  <option>Застройщик 6</option>
+                  <option>Застройщик 7</option>
+                  <option>Застройщик 8</option>
+                  <option>Застройщик 9</option>
+                  <option>Застройщик 10</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
+                <label class="block text-[11px] font-semibold text-slate-500">Срок сдачи</label>
+                <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
+                  <option>2027</option>
+                  <option selected>2028</option>
+                  <option>2029</option>
+                  <option>2030</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2 px-4 py-4">
+                <label class="block text-[11px] font-semibold text-slate-500">Цена ($)</label>
+                <div class="mt-1 grid grid-cols-2 gap-3">
+                  <input class="w-full outline-none text-sm font-semibold text-slate-800" placeholder="от" />
+                  <input class="w-full outline-none text-sm font-semibold text-slate-800" placeholder="до" />
+                </div>
+              </div>
+            </div>
+
+            <!-- ✅ docs row: SAME SQUARE STYLE as top -->
+            <div class="border-t border-slate-200">
+              <div class="grid grid-cols-1 md:grid-cols-12">
+                <div class="md:col-span-4 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
+                  <label class="block text-[11px] font-semibold text-slate-500">Разрешительные документы</label>
+                  <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
+                    <option selected>Любые</option>
+                    <option>Красная книга (риски)</option>
+                    <option>Зелёная книга (проверено)</option>
+                    <option>Право на землю</option>
+                    <option>Госакт / собственность</option>
+                    <option>Разрешение на строительство</option>
+                    <option>Проектная декларация</option>
+                    <option>Экспертиза проекта</option>
+                    <option>Технические условия (ТУ)</option>
+                  </select>
+                </div>
+
+                <div class="md:col-span-8 px-4 py-4">
+                  <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+                    <div class="flex flex-wrap gap-5">
+                      <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
+                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
+                        Все разрешительные документы
+                      </label>
+                      <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
+                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
+                        В ипотеку
+                      </label>
+                      <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
+                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
+                        Акции
+                      </label>
+                    </div>
+
+                    <div class="lg:ml-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                      <button class="h-12 px-6 rounded-xl bg-white text-slate-900 font-semibold border border-slate-200 hover:bg-slate-50 transition">
+                        Показать на карте
+                      </button>
+                      <button class="h-12 px-8 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+                        Найти
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /docs row -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Controls -->
+  <section class="py-5">
+    <div class="flex flex-col md:flex-row md:items-center gap-4">
+      <label class="inline-flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border hairline">
+        <input type="checkbox" class="h-5 w-5 rounded border hairline" />
+        <span class="text-sm font-semibold text-slate-800">Сгруппировать по бигвиллям</span>
+      </label>
+
+      <div class="flex-1 bg-white rounded-2xl px-4 py-3 border hairline flex items-center gap-3">
+        <span class="text-slate-400">🔎</span>
+        <input class="w-full outline-none text-sm" placeholder="Поиск" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards row 1 -->
+  <section class="pb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Энесай" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Премиум-класс</span>
+              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip glass">Рассрочка до 36/ мес</span>
+            <span class="chip">Первый взнос 30%</span>
+          </div>
+
+          <div class="title">ЖК Энесай</div>
+          <a href="#" class="price">От $1700 за м2</a>
+          <div class="addr">г Бишкек, ул Токтогула 132</div>
+          <div class="stock"><b>700</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 1кв 2027г</div>
+        </div>
+      </article>
+
+      <article class="card featured">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Discovery" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Премиум-класс</span>
+              <span class="tag-top glass-dark text-white/90 font-semibold">✓ Все разрешительные документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
+              Рассрочка до 36/ мес
+            </span>
+            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
+              Первый взнос 30%
+            </span>
+          </div>
+
+          <div class="title">ЖК Discovery</div>
+          <a href="#" class="price">От $1700 за м2</a>
+          <div class="addr">г Бишкек, ул Токтогула 132</div>
+          <div class="stock"><b>10</b> квартир <span style="color: rgba(255,255,255,0.55)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 1кв 2027г</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Кыргыз резорт" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Премиум-класс</span>
+              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip">Рассрочка до 36/ мес</span>
+            <span class="chip glass">Первый взнос 30%</span>
+          </div>
+
+          <div class="title">ЖК Кыргыз резорт</div>
+          <a href="#" class="price">От $1700 за м2</a>
+          <div class="addr">г Бишкек, ул Токтогула 132</div>
+          <div class="stock"><b>150</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 1кв 2027г</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Ала-Тоо" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Премиум-класс</span>
+              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip">Рассрочка до 36/ мес</span>
+            <span class="chip">Первый взнос 30%</span>
+          </div>
+
+          <div class="title">ЖК Ала-Тоо</div>
+          <a href="#" class="price">От $1700 за м2</a>
+          <div class="addr">г Бишкек, ул Токтогула 132</div>
+          <div class="stock"><b>300</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 1кв 2027г</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Banner -->
+  <section class="pb-10">
+    <div class="banner-glass-wrap">
+      <div class="banner-glass-content">
+        <div>
+          <div class="banner-glass-pill">Рекламный баннер</div>
+          <div class="banner-glass-sub">Стеклянный эффект. Высота 450px.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards row 2 -->
+  <section class="pb-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Ордо" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Бизнес</span>
+              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip">Рассрочка до 24/ мес</span>
+            <span class="chip glass">Ипотека</span>
+          </div>
+
+          <div class="title">ЖК Ордо</div>
+          <a href="#" class="price">От $1550 за м2</a>
+          <div class="addr">г Бишкек, ул Абдрахманова 210</div>
+          <div class="stock"><b>220</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 4кв 2027г</div>
+        </div>
+      </article>
+
+      <article class="card featured">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Skyline" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Премиум-класс</span>
+              <span class="tag-top glass-dark text-white/90 font-semibold">✓ Документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
+              Рассрочка до 36/ мес
+            </span>
+            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
+              Акции
+            </span>
+          </div>
+
+          <div class="title">ЖК Skyline</div>
+          <a href="#" class="price">От $1900 за м2</a>
+          <div class="addr">г Бишкек, пр. Ч. Айтматова</div>
+          <div class="stock"><b>40</b> квартир <span style="color: rgba(255,255,255,0.55)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 2кв 2028г</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Aurora" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Комфорт+</span>
+              <span class="tag-top glass text-slate-900 font-semibold">✓ Документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip">Рассрочка до 18/ мес</span>
+            <span class="chip">Первый взнос 20%</span>
+          </div>
+
+          <div class="title">ЖК Aurora</div>
+          <a href="#" class="price">От $1200 за м2</a>
+          <div class="addr">г Бишкек, ул Московская 55</div>
+          <div class="stock"><b>380</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 3кв 2027г</div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="media">
+            <img src="hero-bg.png" alt="ЖК Panorama" />
+            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+              <span class="tag-top glass-dark text-white">Бизнес</span>
+              <span class="tag-top glass text-slate-900 font-semibold">✓ Документы</span>
+            </div>
+          </div>
+
+          <div class="mt-3 flex items-center gap-2 flex-wrap">
+            <span class="chip glass">Ипотека</span>
+            <span class="chip">Акции</span>
+          </div>
+
+          <div class="title">ЖК Panorama</div>
+          <a href="#" class="price">От $1450 за м2</a>
+          <div class="addr">г Бишкек, ул Байтик Баатыр</div>
+          <div class="stock"><b>180</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
+
+          <div class="rooms">
+            <button class="room">1</button>
+            <button class="room">2</button>
+            <button class="room">3</button>
+            <button class="room">4</button>
+          </div>
+
+          <div class="divider"></div>
+          <div class="handover">Ближайшая сдача 1кв 2028г</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-slate-950 text-white mt-6">
+  <div class="container-wide py-10">
+    <div class="flex flex-col md:flex-row items-start justify-between gap-6">
+      <div>
+        <div class="text-lg font-extrabold tracking-tight">NAVI•ESTATE</div>
+        <div class="text-white/70 text-sm mt-2">Новостройки Кыргызстана — удобно и красиво.</div>
+      </div>
+      <div class="text-white/70 text-sm">© 2026 • Политика • Пользовательское соглашение</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
