@@ -4,51 +4,48 @@ export default async function handler(req, res) {
 
     const token = process.env.AIRTABLE_TOKEN;
     const baseId = process.env.AIRTABLE_BASE_ID;
-    const table = process.env.AIRTABLE_TABLE; // имя таблицы или tbl...
+    const table = process.env.AIRTABLE_TABLE_ID; // <-- используем твою переменную
 
     if (!token || !baseId || !table) {
       return res.status(500).json({
         ok: false,
         error: "Missing env vars",
-        need: ["AIRTABLE_TOKEN", "AIRTABLE_BASE_ID", "AIRTABLE_TABLE"],
         got: {
           AIRTABLE_TOKEN: !!token,
           AIRTABLE_BASE_ID: !!baseId,
-          AIRTABLE_TABLE: !!table,
-        },
+          AIRTABLE_TABLE_ID: !!table
+        }
       });
     }
 
-    const view = process.env.AIRTABLE_VIEW || ""; // можно не задавать
-    const pageSize = 100;
+    const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`;
 
-    const url = new URL(`https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`);
-    url.searchParams.set("pageSize", String(pageSize));
-    if (view) url.searchParams.set("view", view);
-
-    const r = await fetch(url.toString(), {
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
 
-    const text = await r.text();
-    let data;
-    try { data = JSON.parse(text); } catch { data = null; }
+    const data = await response.json();
 
-    if (!r.ok) {
-      return res.status(r.status).json({
+    if (!response.ok) {
+      return res.status(response.status).json({
         ok: false,
-        error: "Airtable request failed",
-        status: r.status,
-        response: data || text,
+        error: data
       });
     }
 
-    const records = Array.isArray(data?.records)
-      ? data.records.map(x => x.fields)
-      : [];
+    const records = data.records.map(r => r.fields);
 
-    return res.status(200).json({ ok: true, records });
-  } catch (e) {
-    return res.status(500).json({ ok: false, error: String(e?.message || e) });
+    return res.status(200).json({
+      ok: true,
+      records
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      error: error.message
+    });
   }
 }
