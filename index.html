@@ -758,6 +758,122 @@
 
     </div>
   </section>
+  <!-- Airtable Listings (auto) -->
+  <section class="pb-12">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-extrabold text-slate-900">Объекты из базы</h2>
+      <div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
+    </div>
+
+    <div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </section>
+
+  <script>
+    (function () {
+      const grid = document.getElementById("airtableGrid");
+      const statusEl = document.getElementById("airtableStatus");
+
+      function esc(s) {
+        return String(s ?? "").replace(/[&<>"']/g, c => ({
+          "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+        }[c]));
+      }
+
+      function getField(obj, keys) {
+        for (const k of keys) {
+          if (obj && obj[k] != null && obj[k] !== "") return obj[k];
+        }
+        return "";
+      }
+
+      function classBadgeLabel(rec) {
+        return getField(rec, ["class_object", "Класс объекта", "class"]) || "Объект";
+      }
+
+      function linkUrl(rec) {
+        return getField(rec, ["Ссылка", "link", "url"]);
+      }
+
+      function photoUrl(rec) {
+        return getField(rec, ["photo_link", "photo", "image", "Фото"]);
+      }
+
+      function priceText(rec) {
+        const p = getField(rec, ["price_m2", "Цена за м2", "price"]);
+        return p ? String(p) : "—";
+      }
+
+      function addrText(rec) {
+        // если у тебя нет адреса в базе — покажем город + застройщик
+        const city = getField(rec, ["city", "Город"]);
+        const dev = getField(rec, ["developer", "Застройщик"]);
+        return [city, dev].filter(Boolean).join(" • ");
+      }
+
+      function handoverText(rec) {
+        return getField(rec, ["handover", "Срок сдачи"]);
+      }
+
+      function cardHTML(rec) {
+        const title = getField(rec, ["name", "Название", "ЖК", "title"]) || "Без названия";
+        const href = linkUrl(rec) || "#";
+        const img = photoUrl(rec) || "hero-bg.png";
+        const badge = classBadgeLabel(rec);
+        const price = priceText(rec);
+        const addr = addrText(rec);
+        const handover = handoverText(rec);
+
+        return `
+          <article class="card">
+            <div class="card-inner">
+              <div class="media">
+                <img src="${esc(img)}" alt="${esc(title)}" />
+                <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
+                  <span class="tag-top glass-dark text-white">${esc(badge)}</span>
+                </div>
+              </div>
+
+              <div class="title">${esc(title)}</div>
+              <a href="${esc(href)}" target="_blank" rel="noopener" class="price">${esc(price)}</a>
+              <div class="addr">${esc(addr)}</div>
+
+              <div class="divider"></div>
+              <div class="handover">${esc(handover ? ("Сдача: " + handover) : "Срок сдачи: —")}</div>
+            </div>
+          </article>
+        `;
+      }
+
+      async function load() {
+        try {
+          statusEl.textContent = "Загрузка…";
+          const r = await fetch("/api/airtable", { cache: "no-store" });
+          const data = await r.json();
+
+          if (!r.ok) {
+            statusEl.textContent = "Ошибка загрузки";
+            grid.innerHTML = `<div class="text-sm text-red-600">Ошибка: ${esc(data?.error || "unknown")}</div>`;
+            return;
+          }
+
+          const records = Array.isArray(data?.records) ? data.records : [];
+          if (!records.length) {
+            statusEl.textContent = "Пусто";
+            grid.innerHTML = `<div class="text-sm text-slate-600">В базе пока нет записей.</div>`;
+            return;
+          }
+
+          statusEl.textContent = `Найдено: ${records.length}`;
+          grid.innerHTML = records.slice(0, 24).map(cardHTML).join("");
+        } catch (e) {
+          statusEl.textContent = "Ошибка";
+          grid.innerHTML = `<div class="text-sm text-red-600">Ошибка: ${esc(e?.message || e)}</div>`;
+        }
+      }
+
+      load();
+    })();
+  </script>
 
 </main>
 
