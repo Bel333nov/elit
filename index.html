@@ -10,7 +10,7 @@
   <!-- Font close to BI style: Manrope + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -82,7 +82,7 @@
     /* Header spacing */
     .header-inner{ max-width: 1400px; margin: 0 auto; padding: 0 var(--pad); }
 
-    /* ===== Cards (new BI-like light style) ===== */
+    /* ===== Cards (BI-like LIGHT style, no black cards) ===== */
     .listing-card{
       border-radius: 22px;
       background: #ffffff;
@@ -141,17 +141,22 @@
       flex: 1;
     }
 
+    /* Title size like BI */
     .listing-title{
-      font-size: 26px;
+      font-size: 27px;
       font-weight: 900;
       letter-spacing: -0.03em;
       color: #0b1220;
       line-height: 1.08;
     }
+    @media (max-width: 768px){
+      .listing-title{ font-size: 22px; }
+    }
 
+    /* "от • компания" */
     .listing-sub{
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       color: rgba(15,23,42,0.62);
       display:flex;
       gap: 8px;
@@ -169,6 +174,7 @@
       margin-top: 2px;
     }
 
+    /* 3 columns: сдача / город / адрес */
     .listing-3col{
       margin-top: 2px;
       border-top: 1px solid rgba(15,23,42,0.08);
@@ -185,7 +191,7 @@
       display:block;
       font-size: 11px;
       color: rgba(15,23,42,0.45);
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 2px;
     }
     .listing-3col .value{
@@ -210,12 +216,15 @@
       font-weight: 900;
       color: rgba(15,23,42,0.86);
       transition: 150ms ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
     .btn-more:hover{
       background: rgba(15,23,42,0.03);
     }
 
-    /* Banner inside grid */
+    /* Banner inside grid (after first 4) */
     .grid-banner{
       border-radius: 22px;
       position: relative;
@@ -261,7 +270,7 @@
       position: relative;
       margin-top: 10px;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       color: rgba(15,23,42,0.55);
     }
   </style>
@@ -370,7 +379,7 @@
               </div>
             </div>
 
-            <!-- bottom row -->
+            <!-- bottom row (symmetric, no docs text) -->
             <div class="border-t border-slate-200">
               <div class="px-4 py-4">
                 <div class="flex flex-col lg:flex-row lg:items-center gap-4">
@@ -637,15 +646,10 @@
         const city = fCityValue(rec) || "—";
         const dev = fDeveloper(rec) || "—";
         const handover = fHandover(rec) || "—";
-
         const address = fAddress(rec) || "—";
 
         const p = priceValue(rec);
         const priceText = (p != null) ? `от $${p} / м²` : (fPriceM2Text(rec) ? String(fPriceM2Text(rec)) : "—");
-
-        // “от + компания”
-        const subLeft = "от";
-        const subRight = dev;
 
         return `
           <article class="listing-card">
@@ -658,9 +662,9 @@
               <div class="listing-title">${esc(title)}</div>
 
               <div class="listing-sub">
-                <span>${esc(subLeft)}</span>
+                <span>от</span>
                 <span class="dot">•</span>
-                <span>${esc(subRight)}</span>
+                <span>${esc(dev)}</span>
               </div>
 
               <div class="listing-price">${esc(priceText)}</div>
@@ -694,7 +698,6 @@
         const sorted = sortObjects(records);
         statusEl.textContent = `Найдено: ${sorted.length}`;
 
-        // 4 карточки -> баннер -> остальные
         const first = sorted.slice(0, 4).map(cardHTML).join("");
         const rest = sorted.slice(4).map(cardHTML).join("");
 
