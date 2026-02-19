@@ -19,7 +19,6 @@
       --r-lg: 22px;
     }
 
-    /* Background: light & clean */
     body{
       font-family: "Manrope","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:#0f172a;
@@ -55,7 +54,6 @@
         linear-gradient(180deg, rgba(2,6,23,0.28) 0%, rgba(2,6,23,0.66) 58%, rgba(2,6,23,0.38) 100%);
     }
 
-    /* Hero title smaller + centered */
     .hero-title{
       font-size: clamp(18px, 2.6vw, 36px);
       line-height: 1.06;
@@ -68,7 +66,6 @@
       text-align: center;
     }
 
-    /* SEO under title (optional) */
     .hero-seo{
       margin-top: 10px;
       max-width: 860px;
@@ -82,156 +79,158 @@
       text-shadow: 0 10px 30px rgba(2,6,23,0.45);
     }
 
-    /* Cards */
-    .card{
-      border-radius: var(--r-xl);
-      background:#fff;
-      box-shadow: 0 14px 30px rgba(15,23,42,0.07);
-      overflow:hidden;
-    }
-    .card-inner{ padding:14px; }
+    /* Header spacing */
+    .header-inner{ max-width: 1400px; margin: 0 auto; padding: 0 var(--pad); }
 
-    .media{
-      border-radius: var(--r-lg);
+    /* ===== Cards (new BI-like light style) ===== */
+    .listing-card{
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow: 0 14px 30px rgba(15,23,42,0.06);
       overflow:hidden;
-      background:#E5E7EB;
-      position:relative;
-      isolation:isolate;
+      display:flex;
+      flex-direction: column;
+      min-height: 100%;
     }
-    .media::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(2,6,23,0.00) 0%, rgba(2,6,23,0.12) 100%);
-      z-index:1;
-      pointer-events:none;
+
+    .listing-media{
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      margin: 14px 14px 0 14px;
+      background: #e5e7eb;
+      isolation: isolate;
     }
-    .media img{
-      width:100%;
+    .listing-media img{
+      width: 100%;
       height: 210px;
       object-fit: cover;
       display:block;
+      transform: translateZ(0);
+    }
+    .listing-media::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,0.00) 55%, rgba(2,6,23,0.10) 100%);
+      pointer-events:none;
     }
 
-    /* top tags */
-    .tag-top{
+    .badge{
+      position:absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
       border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
       padding: 7px 11px;
-      line-height: 1;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      white-space: nowrap;
-      max-width: max-content;
-      z-index:2;
-    }
-
-    /* chips */
-    .chip{
-      border-radius: 999px;
       font-size: 12px;
-      font-weight: 600;
-      padding: 9px 12px;
+      font-weight: 800;
       line-height: 1;
-      color:#0f172a;
-      background:#EFF6FF;
-      border: 1px solid rgba(15,23,42,0.06);
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      white-space: nowrap;
+      color:#fff;
+      background: rgba(30,41,59,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 18px rgba(2,6,23,0.20);
     }
 
-    /* typography */
-    .title{
-      margin-top: 12px;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.12;
-      color:#0b1220;
-      text-align:left;
+    .listing-body{
+      padding: 14px;
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
     }
-    .price{
-      margin-top: 8px;
-      font-size: 14px;
+
+    .listing-title{
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #0b1220;
+      line-height: 1.08;
+    }
+
+    .listing-sub{
+      font-size: 13px;
       font-weight: 700;
-      color:#2563eb;
-      text-align:left;
-      display:block;
+      color: rgba(15,23,42,0.62);
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
-    .addr{
-      margin-top: 8px;
-      font-size: 13px;
-      color: rgba(15,23,42,0.60);
-      text-align:left;
+    .listing-sub .dot{
+      color: rgba(15,23,42,0.28);
+      font-weight: 900;
     }
-    .stock{
-      margin-top: 8px;
-      font-size: 13px;
-      color: rgba(15,23,42,0.72);
-      text-align:left;
-    }
-    .stock b{ color:#0f172a; font-weight: 800; }
 
-    .rooms{
-      margin-top: 12px;
+    .listing-price{
+      font-size: 16px;
+      font-weight: 900;
+      color: #2563eb;
+      margin-top: 2px;
+    }
+
+    .listing-3col{
+      margin-top: 2px;
+      border-top: 1px solid rgba(15,23,42,0.08);
+      padding-top: 10px;
+
       display:grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
+      font-size: 12px;
+      color: rgba(15,23,42,0.70);
+      font-weight: 700;
     }
-    .room{
-      height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(15,23,42,0.16);
-      background: transparent;
-      font-size: 13px;
+    .listing-3col .label{
+      display:block;
+      font-size: 11px;
+      color: rgba(15,23,42,0.45);
       font-weight: 800;
-      color: rgba(15,23,42,0.86);
+      margin-bottom: 2px;
     }
-    .room:hover{ background: rgba(15,23,42,0.03); }
-
-    .divider{ margin-top: 12px; border-top: 1px solid rgba(15,23,42,0.10); }
-    .handover{
-      margin-top: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(15,23,42,0.78);
-      text-align:left;
-    }
-
-    /* featured card */
-    .featured{
-      background:
-        radial-gradient(900px 520px at 15% 0%, rgba(59,130,246,0.22) 0%, rgba(2,6,23,0.0) 55%),
-        radial-gradient(760px 480px at 85% 10%, rgba(99,102,241,0.18) 0%, rgba(2,6,23,0.0) 58%),
-        linear-gradient(180deg, rgba(2,6,23,0.92) 0%, rgba(2,6,23,0.985) 100%);
-    }
-    .featured .title{ color:#fff; }
-    .featured .price{ color:#93c5fd; }
-    .featured .addr{ color: rgba(255,255,255,0.68); }
-    .featured .stock{ color: rgba(255,255,255,0.76); }
-    .featured .stock b{ color:#fff; }
-    .featured .room{
-      border-color: rgba(255,255,255,0.22);
-      color: rgba(255,255,255,0.92);
-    }
-    .featured .room:hover{ background: rgba(255,255,255,0.06); }
-    .featured .divider{ border-top-color: rgba(255,255,255,0.14); }
-    .featured .handover{ color: rgba(255,255,255,0.80); }
-
-    /* Banner */
-    .banner-glass-wrap{
-      height: 450px;
-      border-radius: var(--r-xl);
-      position: relative;
+    .listing-3col .value{
+      color: rgba(15,23,42,0.80);
+      font-weight: 900;
+      white-space: nowrap;
       overflow: hidden;
-      border: 1px solid rgba(15,23,42,0.10);
-      box-shadow: 0 16px 36px rgba(15,23,42,0.10);
-      background: linear-gradient(135deg, rgba(15,23,42,0.08) 0%, rgba(15,23,42,0.03) 100%);
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
-    .banner-glass-wrap::before{
+
+    .listing-actions{
+      padding: 12px 14px 16px 14px;
+    }
+    .btn-more{
+      width: 100%;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,0.14);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      color: rgba(15,23,42,0.86);
+      transition: 150ms ease;
+    }
+    .btn-more:hover{
+      background: rgba(15,23,42,0.03);
+    }
+
+    /* Banner inside grid */
+    .grid-banner{
+      border-radius: 22px;
+      position: relative;
+      overflow:hidden;
+      border: 1px solid rgba(15,23,42,0.10);
+      box-shadow: 0 16px 36px rgba(15,23,42,0.08);
+      min-height: 320px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.08) 0%, rgba(15,23,42,0.03) 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 24px;
+    }
+    .grid-banner::before{
       content:"";
       position:absolute; inset:0;
       background:
@@ -242,39 +241,29 @@
       -webkit-backdrop-filter: blur(16px);
       pointer-events:none;
     }
-    .banner-glass-content{
+    .grid-banner .pill{
       position: relative;
-      height: 100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding: 24px;
-    }
-    .banner-glass-pill{
       display:inline-flex;
       align-items:center;
       justify-content:center;
       padding: 12px 16px;
       border-radius: 999px;
       font-size: 14px;
-      font-weight: 800;
-      color: rgba(15,23,42,0.85);
+      font-weight: 900;
+      color: rgba(15,23,42,0.86);
       background: rgba(255,255,255,0.55);
       border: 1px solid rgba(255,255,255,0.22);
       box-shadow: 0 12px 24px rgba(15,23,42,0.10);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
-    .banner-glass-sub{
+    .grid-banner .sub{
+      position: relative;
       margin-top: 10px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       color: rgba(15,23,42,0.55);
     }
-
-    /* Header spacing */
-    .header-inner{ max-width: 1400px; margin: 0 auto; padding: 0 var(--pad); }
   </style>
 </head>
 
@@ -381,7 +370,7 @@
               </div>
             </div>
 
-            <!-- bottom row (оставили — но БЕЗ "разрешительных документов") -->
+            <!-- bottom row -->
             <div class="border-t border-slate-200">
               <div class="px-4 py-4">
                 <div class="flex flex-col lg:flex-row lg:items-center gap-4">
@@ -412,7 +401,6 @@
                 </div>
               </div>
             </div>
-            <!-- /bottom row -->
 
           </div>
         </div>
@@ -435,297 +423,7 @@
     </div>
   </section>
 
-  <!-- Cards row 1 -->
-  <section class="pb-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <article class="card">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Энесай" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Премиум-класс</span>
-              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip glass">Рассрочка до 36/ мес</span>
-            <span class="chip">Первый взнос 30%</span>
-          </div>
-
-          <div class="title">ЖК Энесай</div>
-          <a href="#" class="price">От $1700 за м2</a>
-          <div class="addr">г Бишкек, ул Токтогула 132</div>
-          <div class="stock"><b>700</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 1кв 2027г</div>
-        </div>
-      </article>
-
-      <article class="card featured">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Discovery" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Премиум-класс</span>
-              <span class="tag-top glass-dark text-white/90 font-semibold">✓ Все разрешительные документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
-              Рассрочка до 36/ мес
-            </span>
-            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
-              Первый взнос 30%
-            </span>
-          </div>
-
-          <div class="title">ЖК Discovery</div>
-          <a href="#" class="price">От $1700 за м2</a>
-          <div class="addr">г Бишкек, ул Токтогула 132</div>
-          <div class="stock"><b>10</b> квартир <span style="color: rgba(255,255,255,0.55)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 1кв 2027г</div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Кыргыз резорт" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Премиум-класс</span>
-              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip">Рассрочка до 36/ мес</span>
-            <span class="chip glass">Первый взнос 30%</span>
-          </div>
-
-          <div class="title">ЖК Кыргыз резорт</div>
-          <a href="#" class="price">От $1700 за м2</a>
-          <div class="addr">г Бишкек, ул Токтогула 132</div>
-          <div class="stock"><b>150</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 1кв 2027г</div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Ала-Тоо" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Премиум-класс</span>
-              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip">Рассрочка до 36/ мес</span>
-            <span class="chip">Первый взнос 30%</span>
-          </div>
-
-          <div class="title">ЖК Ала-Тоо</div>
-          <a href="#" class="price">От $1700 за м2</a>
-          <div class="addr">г Бишкек, ул Токтогула 132</div>
-          <div class="stock"><b>300</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 1кв 2027г</div>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Banner -->
-  <section class="pb-10">
-    <div class="banner-glass-wrap">
-      <div class="banner-glass-content">
-        <div>
-          <div class="banner-glass-pill">Рекламный баннер</div>
-          <div class="banner-glass-sub">Стеклянный эффект. Высота 450px.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Cards row 2 -->
-  <section class="pb-12">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-      <article class="card">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Ордо" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Бизнес</span>
-              <span class="tag-top glass text-slate-900 font-semibold">✓ Все разрешительные документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip">Рассрочка до 24/ мес</span>
-            <span class="chip glass">Ипотека</span>
-          </div>
-
-          <div class="title">ЖК Ордо</div>
-          <a href="#" class="price">От $1550 за м2</a>
-          <div class="addr">г Бишкек, ул Абдрахманова 210</div>
-          <div class="stock"><b>220</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 4кв 2027г</div>
-        </div>
-      </article>
-
-      <article class="card featured">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Skyline" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Премиум-класс</span>
-              <span class="tag-top glass-dark text-white/90 font-semibold">✓ Документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
-              Рассрочка до 36/ мес
-            </span>
-            <span class="chip" style="background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.14); color: rgba(255,255,255,0.92);">
-              Акции
-            </span>
-          </div>
-
-          <div class="title">ЖК Skyline</div>
-          <a href="#" class="price">От $1900 за м2</a>
-          <div class="addr">г Бишкек, пр. Ч. Айтматова</div>
-          <div class="stock"><b>40</b> квартир <span style="color: rgba(255,255,255,0.55)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 2кв 2028г</div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Aurora" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Комфорт+</span>
-              <span class="tag-top glass text-slate-900 font-semibold">✓ Документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip">Рассрочка до 18/ мес</span>
-            <span class="chip">Первый взнос 20%</span>
-          </div>
-
-          <div class="title">ЖК Aurora</div>
-          <a href="#" class="price">От $1200 за м2</a>
-          <div class="addr">г Бишкек, ул Московская 55</div>
-          <div class="stock"><b>380</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 3кв 2027г</div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-inner">
-          <div class="media">
-            <img src="hero-bg.png" alt="ЖК Panorama" />
-            <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-              <span class="tag-top glass-dark text-white">Бизнес</span>
-              <span class="tag-top glass text-slate-900 font-semibold">✓ Документы</span>
-            </div>
-          </div>
-
-          <div class="mt-3 flex items-center gap-2 flex-wrap">
-            <span class="chip glass">Ипотека</span>
-            <span class="chip">Акции</span>
-          </div>
-
-          <div class="title">ЖК Panorama</div>
-          <a href="#" class="price">От $1450 за м2</a>
-          <div class="addr">г Бишкек, ул Байтик Баатыр</div>
-          <div class="stock"><b>180</b> квартир <span style="color: rgba(15,23,42,0.50)">в продаже</span></div>
-
-          <div class="rooms">
-            <button class="room">1</button>
-            <button class="room">2</button>
-            <button class="room">3</button>
-            <button class="room">4</button>
-          </div>
-
-          <div class="divider"></div>
-          <div class="handover">Ближайшая сдача 1кв 2028г</div>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- Airtable Listings (auto) -->
+  <!-- Airtable Listings -->
   <section class="pb-12">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-lg font-extrabold text-slate-900">Объекты из базы</h2>
@@ -773,16 +471,18 @@
         return "";
       }
 
-      // Поля из твоей базы (по скринам)
-      function fCityValue(rec){ return getField(rec, ["city"]); }
-      function fClassObject(rec){ return getField(rec, ["class_object"]); } // "Комфорт+"
-      function fDeveloper(rec){ return getField(rec, ["developer"]); }
-      function fHandover(rec){ return getField(rec, ["handover"]); } // "3 кв. 2028 г."
-      function fName(rec){ return getField(rec, ["name"]); }
+      // поля базы (по скринам) + запасные
+      function fCityValue(rec){ return getField(rec, ["city", "Город"]); }
+      function fClassObject(rec){ return getField(rec, ["class_object", "Класс объекта", "class_object_text"]); }
+      function fDeveloper(rec){ return getField(rec, ["developer", "Застройщик"]); }
+      function fHandover(rec){ return getField(rec, ["handover", "Срок сдачи"]); }
+      function fName(rec){ return getField(rec, ["name", "Название"]); }
       function fLink(rec){ return getField(rec, ["Ссылка", "link", "url"]); }
-      function fPhoto(rec){ return getField(rec, ["photo_link"]); }
-      function fPriceM2Text(rec){ return getField(rec, ["price_m2"]); } // "от 1150$ ( ... )"
-      // Если позже добавишь поля: mortgage/promo/type — просто назови их так в Airtable и тут подцепим:
+      function fPhoto(rec){ return getField(rec, ["photo_link", "photo", "image"]); }
+      function fPriceM2Text(rec){ return getField(rec, ["price_m2", "Цена за м2"]); }
+      function fAddress(rec){ return getField(rec, ["address", "Адрес", "location"]); } // если добавишь поле
+
+      // ипотека/акции/тип — заработают если добавишь поля в Airtable
       function fMortgageFlag(rec){ return getField(rec, ["mortgage", "В ипотеку"]); }
       function fPromoFlag(rec){ return getField(rec, ["promo", "Акции"]); }
       function fTypeValue(rec){ return getField(rec, ["type", "Тип недвижимости"]); }
@@ -809,62 +509,9 @@
         return m ? Number(m[1]) : null;
       }
 
-      // Сортировка: город -> класс -> год сдачи -> цена
-      function sortObjects(items) {
-        return [...items].sort((a, b) => {
-          const byCity = norm(fCityValue(a)).localeCompare(norm(fCityValue(b)), "ru");
-          if (byCity !== 0) return byCity;
-
-          const byClass = norm(fClassObject(a)).localeCompare(norm(fClassObject(b)), "ru");
-          if (byClass !== 0) return byClass;
-
-          const ya = extractYear(fHandover(a)) ?? 9999;
-          const yb = extractYear(fHandover(b)) ?? 9999;
-          if (ya !== yb) return ya - yb;
-
-          const pa = priceValue(a);
-          const pb = priceValue(b);
-          if (pa == null && pb == null) return 0;
-          if (pa == null) return 1;
-          if (pb == null) return -1;
-          return pa - pb;
-        });
-      }
-
-      function cardHTML(rec) {
-        const title = fName(rec) || "Без названия";
-        const href = fLink(rec) || "#";
-        const img = fPhoto(rec) || "hero-bg.png";
-        const badge = fClassObject(rec) || "Объект";
-
-        const city = fCityValue(rec);
-        const dev = fDeveloper(rec);
-        const addr = [city, dev].filter(Boolean).join(" • ");
-
-        const handover = fHandover(rec);
-
-        const p = priceValue(rec);
-        const priceText = (p != null) ? `от $${p} за м²` : (fPriceM2Text(rec) ? String(fPriceM2Text(rec)) : "—");
-
-        return `
-          <article class="card">
-            <div class="card-inner">
-              <div class="media">
-                <img src="${esc(img)}" alt="${esc(title)}" />
-                <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-                  <span class="tag-top glass-dark text-white">${esc(badge)}</span>
-                </div>
-              </div>
-
-              <div class="title">${esc(title)}</div>
-              <a href="${esc(href)}" target="_blank" rel="noopener" class="price">${esc(priceText)}</a>
-              <div class="addr">${esc(addr)}</div>
-
-              <div class="divider"></div>
-              <div class="handover">${esc(handover ? ("Сдача: " + handover) : "Срок сдачи: —")}</div>
-            </div>
-          </article>
-        `;
+      function truthy(v){
+        const s = norm(v);
+        return s === "true" || s === "1" || s === "yes" || s === "да" || s === "истина" || s === "y";
       }
 
       function setOptions(selectEl, values, firstLabel="Любой") {
@@ -879,26 +526,15 @@
       }
 
       function buildFilterOptions(records) {
-        const cities = Array.from(new Set(records.map(fCityValue).filter(Boolean)))
-          .sort((a,b)=>a.localeCompare(b,"ru"));
-        const classes = Array.from(new Set(records.map(fClassObject).filter(Boolean)))
-          .sort((a,b)=>a.localeCompare(b,"ru"));
-        const devs = Array.from(new Set(records.map(fDeveloper).filter(Boolean)))
-          .sort((a,b)=>a.localeCompare(b,"ru"));
-
-        const years = Array.from(new Set(records.map(r => extractYear(fHandover(r))).filter(Boolean)))
-          .sort((a,b)=>a-b)
-          .map(String);
+        const cities = Array.from(new Set(records.map(fCityValue).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ru"));
+        const classes = Array.from(new Set(records.map(fClassObject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ru"));
+        const devs = Array.from(new Set(records.map(fDeveloper).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ru"));
+        const years = Array.from(new Set(records.map(r => extractYear(fHandover(r))).filter(Boolean))).sort((a,b)=>a-b).map(String);
 
         setOptions(elCity, cities, "Любой");
         setOptions(elClass, classes, "Любой");
         setOptions(elDev, devs, "Любой");
         setOptions(elYear, years, "Любой");
-      }
-
-      function truthy(v){
-        const s = norm(v);
-        return s === "true" || s === "1" || s === "yes" || s === "да" || s === "истина" || s === "y";
       }
 
       function applyFilters(records) {
@@ -942,13 +578,11 @@
             if (!text.includes(q)) return false;
           }
 
-          // тип недвижимости (будет работать, если ты добавишь поле "type" или "Тип недвижимости" в Airtable)
           if (type) {
             const rt = norm(fTypeValue(rec));
             if (rt && rt !== norm(type)) return false;
           }
 
-          // ипотека/акции (будет работать, если ты добавишь поля mortgage/promo или "В ипотеку"/"Акции" в Airtable)
           if (wantMortgage) {
             const mv = fMortgageFlag(rec);
             if (!truthy(mv)) return false;
@@ -962,10 +596,109 @@
         });
       }
 
+      function sortObjects(items) {
+        return [...items].sort((a, b) => {
+          const byCity = norm(fCityValue(a)).localeCompare(norm(fCityValue(b)), "ru");
+          if (byCity !== 0) return byCity;
+
+          const byClass = norm(fClassObject(a)).localeCompare(norm(fClassObject(b)), "ru");
+          if (byClass !== 0) return byClass;
+
+          const ya = extractYear(fHandover(a)) ?? 9999;
+          const yb = extractYear(fHandover(b)) ?? 9999;
+          if (ya !== yb) return ya - yb;
+
+          const pa = priceValue(a);
+          const pb = priceValue(b);
+          if (pa == null && pb == null) return 0;
+          if (pa == null) return 1;
+          if (pb == null) return -1;
+          return pa - pb;
+        });
+      }
+
+      function bannerHTML() {
+        return `
+          <div class="grid-banner sm:col-span-2 lg:col-span-4">
+            <div>
+              <div class="pill">Рекламный баннер</div>
+              <div class="sub">Показываем после первых 4 карточек из базы</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function cardHTML(rec) {
+        const title = fName(rec) || "Без названия";
+        const href = fLink(rec) || "#";
+        const img = fPhoto(rec) || "hero-bg.png";
+        const badge = fClassObject(rec) || "Объект";
+
+        const city = fCityValue(rec) || "—";
+        const dev = fDeveloper(rec) || "—";
+        const handover = fHandover(rec) || "—";
+
+        const address = fAddress(rec) || "—";
+
+        const p = priceValue(rec);
+        const priceText = (p != null) ? `от $${p} / м²` : (fPriceM2Text(rec) ? String(fPriceM2Text(rec)) : "—");
+
+        // “от + компания”
+        const subLeft = "от";
+        const subRight = dev;
+
+        return `
+          <article class="listing-card">
+            <div class="listing-media">
+              <img src="${esc(img)}" alt="${esc(title)}" />
+              <div class="badge">${esc(badge)}</div>
+            </div>
+
+            <div class="listing-body">
+              <div class="listing-title">${esc(title)}</div>
+
+              <div class="listing-sub">
+                <span>${esc(subLeft)}</span>
+                <span class="dot">•</span>
+                <span>${esc(subRight)}</span>
+              </div>
+
+              <div class="listing-price">${esc(priceText)}</div>
+
+              <div class="listing-3col">
+                <div>
+                  <span class="label">Срок сдачи</span>
+                  <div class="value" title="${esc(handover)}">${esc(handover)}</div>
+                </div>
+                <div>
+                  <span class="label">Город</span>
+                  <div class="value" title="${esc(city)}">${esc(city)}</div>
+                </div>
+                <div>
+                  <span class="label">Адрес</span>
+                  <div class="value" title="${esc(address)}">${esc(address)}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="listing-actions">
+              <a href="${esc(href)}" target="_blank" rel="noopener">
+                <button class="btn-more">Подробнее</button>
+              </a>
+            </div>
+          </article>
+        `;
+      }
+
       function render(records) {
         const sorted = sortObjects(records);
         statusEl.textContent = `Найдено: ${sorted.length}`;
-        grid.innerHTML = sorted.slice(0, 48).map(cardHTML).join("");
+
+        // 4 карточки -> баннер -> остальные
+        const first = sorted.slice(0, 4).map(cardHTML).join("");
+        const rest = sorted.slice(4).map(cardHTML).join("");
+
+        grid.innerHTML = first + (sorted.length > 4 ? bannerHTML() : "") + rest;
       }
 
       function refresh() {
@@ -1016,7 +749,6 @@
         }
       }
 
-      // события
       if (btnFind) btnFind.addEventListener("click", refresh);
       if (btnReset) btnReset.addEventListener("click", resetFilters);
 
