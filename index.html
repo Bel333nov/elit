@@ -1,84 +1,90 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>NAVI•ESTATE — Новостройки</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAVI•ESTATE — Новостройки</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<style>
-body{
-  font-family:"Manrope",sans-serif;
-  background:#F3F4F6;
-  color:#0f172a;
-}
+  <style>
+    body{
+      font-family:"Manrope",sans-serif;
+      background:#F3F4F6;
+      color:#0f172a;
+    }
 
-.container-wide{padding:0 10px;}
-.hairline{border-color:rgba(15,23,42,0.08);}
+    .container-wide{padding:0 12px;}
+    .hairline{border-color:rgba(15,23,42,0.08);}
 
-.hero-title{
-  font-size:clamp(22px,3vw,38px);
-  font-weight:800;
-  letter-spacing:-0.03em;
-  text-align:center;
-  color:#fff;
-}
+    .hero-overlay{
+      background:
+        linear-gradient(180deg, rgba(2,6,23,0.45) 0%, rgba(2,6,23,0.65) 100%);
+    }
 
-.filter-box{
-  background:#fff;
-  border-radius:24px;
-  box-shadow:0 18px 40px rgba(15,23,42,0.08);
-  border:1px solid rgba(15,23,42,0.06);
-}
+    .hero-title{
+      font-size:clamp(22px,3vw,38px);
+      font-weight:800;
+      letter-spacing:-0.03em;
+      text-align:center;
+      color:#fff;
+    }
 
-.filter-item{
-  padding:18px 16px;
-  border-right:1px solid rgba(15,23,42,0.08);
-}
+    .card{
+      border-radius:22px;
+      background:#fff;
+      box-shadow:0 16px 36px rgba(15,23,42,0.08);
+      overflow:hidden;
+    }
 
-.filter-item:last-child{border-right:none;}
+    .media img{
+      width:100%;
+      height:210px;
+      object-fit:cover;
+    }
 
-.filter-label{
-  font-size:11px;
-  font-weight:600;
-  color:#64748b;
-}
+    .title{
+      margin-top:12px;
+      font-size:20px;
+      font-weight:800;
+    }
 
-.filter-select,
-.filter-input{
-  margin-top:4px;
-  font-size:14px;
-  font-weight:600;
-  width:100%;
-  outline:none;
-  background:transparent;
-}
+    .price{
+      margin-top:6px;
+      font-weight:700;
+      color:#2563eb;
+      display:block;
+    }
 
-.card{
-  background:#fff;
-  border-radius:22px;
-  box-shadow:0 16px 36px rgba(15,23,42,0.08);
-  overflow:hidden;
-}
+    .addr{
+      margin-top:6px;
+      font-size:13px;
+      color:#64748b;
+    }
 
-.media img{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-}
-</style>
+    .divider{
+      margin-top:12px;
+      border-top:1px solid rgba(15,23,42,0.1);
+    }
+
+    .handover{
+      margin-top:10px;
+      font-size:13px;
+      color:#475569;
+      font-weight:600;
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="bg-white border-b hairline sticky top-0 z-50">
-  <div class="container-wide max-w-[1400px] mx-auto flex justify-between items-center py-4">
-    <div class="font-extrabold text-lg">NAVI•ESTATE</div>
+<header class="sticky top-0 z-50 bg-white border-b hairline">
+  <div class="container-wide max-w-[1400px] mx-auto flex items-center justify-between py-4">
+    <div class="font-extrabold text-lg tracking-tight">NAVI•ESTATE</div>
     <button class="h-11 px-6 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition">
       Подобрать квартиру
     </button>
@@ -87,10 +93,14 @@ body{
 
 <main class="container-wide max-w-[1400px] mx-auto">
 
-<section class="mt-6 relative rounded-[28px] overflow-hidden bg-gradient-to-br from-slate-400 to-slate-700 py-16 px-6">
+<section class="mt-6 relative rounded-[28px] overflow-hidden bg-gradient-to-br from-slate-500 to-slate-800 py-16 px-6">
 
-<div class="absolute top-6 left-6">
-  <div class="px-4 py-2 bg-black/30 text-white rounded-xl text-sm font-semibold">
+<div class="absolute inset-0 hero-overlay"></div>
+
+<div class="relative z-10">
+
+<div class="absolute top-4 left-4">
+  <div class="px-4 py-2 bg-black/40 text-white rounded-xl text-sm font-semibold">
     📍 Бишкек
   </div>
 </div>
@@ -99,101 +109,101 @@ body{
   Поиск премиальной недвижимости
 </h1>
 
-<div class="mt-8 filter-box overflow-hidden">
+<!-- FILTER -->
+<div class="mt-10 bg-white rounded-2xl overflow-hidden border border-black/5 shadow-lg">
 
-<!-- 14 column grid -->
-<div class="grid grid-cols-1 md:grid-cols-14">
+  <div class="grid grid-cols-1 md:grid-cols-12">
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Город</label>
-<select id="fCity" class="filter-select">
-<option value="">Любой</option>
-</select>
-</div>
+    <div class="md:col-span-2 px-4 py-4 border-r border-slate-200">
+      <label class="block text-[11px] font-semibold text-slate-500">Город</label>
+      <select class="mt-1 w-full outline-none text-sm font-semibold bg-transparent">
+        <option>Бишкек</option>
+        <option>Ош</option>
+        <option>Ыссык-Кол</option>
+      </select>
+    </div>
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Тип недвижимости</label>
-<select class="filter-select">
-<option>Любой</option>
-<option>Квартиры</option>
-<option>Коммерческие помещения</option>
-<option>Танхаусы</option>
-</select>
-</div>
+    <div class="md:col-span-2 px-4 py-4 border-r border-slate-200">
+      <label class="block text-[11px] font-semibold text-slate-500">Тип недвижимости</label>
+      <select class="mt-1 w-full outline-none text-sm font-semibold bg-transparent">
+        <option>Квартиры</option>
+        <option>Коммерческие помещения</option>
+        <option>Танхаусы</option>
+      </select>
+    </div>
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Класс объекта</label>
-<select id="fClass" class="filter-select">
-<option value="">Любой</option>
-</select>
-</div>
+    <div class="md:col-span-2 px-4 py-4 border-r border-slate-200">
+      <label class="block text-[11px] font-semibold text-slate-500">Класс объекта</label>
+      <select class="mt-1 w-full outline-none text-sm font-semibold bg-transparent">
+        <option>Комфорт+</option>
+        <option>Бизнес</option>
+        <option>Премиум</option>
+      </select>
+    </div>
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Топ застройщики</label>
-<select id="fDev" class="filter-select">
-<option value="">Любой</option>
-</select>
-</div>
+    <div class="md:col-span-2 px-4 py-4 border-r border-slate-200">
+      <label class="block text-[11px] font-semibold text-slate-500">Топ застройщики</label>
+      <select class="mt-1 w-full outline-none text-sm font-semibold bg-transparent">
+        <option>Любой</option>
+      </select>
+    </div>
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Срок сдачи</label>
-<select id="fYear" class="filter-select">
-<option value="">Любой</option>
-</select>
-</div>
+    <div class="md:col-span-2 px-4 py-4 border-r border-slate-200">
+      <label class="block text-[11px] font-semibold text-slate-500">Срок сдачи</label>
+      <select class="mt-1 w-full outline-none text-sm font-semibold bg-transparent">
+        <option>2027</option>
+        <option>2028</option>
+        <option>2029</option>
+      </select>
+    </div>
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Разрешительные документы</label>
-<select class="filter-select">
-<option>Любые</option>
-<option>Красная книга</option>
-<option>Зелёная книга</option>
-<option>Разрешение на строительство</option>
-<option>Экспертиза проекта</option>
-</select>
-</div>
+    <div class="md:col-span-2 px-4 py-4">
+      <label class="block text-[11px] font-semibold text-slate-500">Цена ($)</label>
+      <div class="mt-1 grid grid-cols-2 gap-2">
+        <input class="w-full outline-none text-sm font-semibold" placeholder="от" />
+        <input class="w-full outline-none text-sm font-semibold" placeholder="до" />
+      </div>
+    </div>
 
-<div class="filter-item md:col-span-2">
-<label class="filter-label">Цена ($/м²)</label>
-<div class="grid grid-cols-2 gap-2 mt-1">
-<input id="fPriceFrom" class="filter-input" placeholder="от" />
-<input id="fPriceTo" class="filter-input" placeholder="до" />
-</div>
-</div>
+  </div>
 
-</div>
+  <div class="border-t border-slate-200 px-4 py-4 flex justify-end gap-4">
 
-<!-- bottom row buttons -->
-<div class="border-t border-slate-200 px-6 py-4 flex flex-wrap gap-4 items-center justify-end">
+    <button class="h-12 px-6 whitespace-nowrap rounded-xl bg-white border border-slate-200 font-semibold hover:bg-slate-50 transition">
+      Показать на карте
+    </button>
 
-<button class="h-12 px-6 min-w-[200px] whitespace-nowrap rounded-xl bg-white border border-slate-200 font-semibold hover:bg-slate-50 transition">
-  Показать на карте
-</button>
+    <button class="h-12 px-8 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+      Найти
+    </button>
 
-<button id="btnFind" class="h-12 px-8 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
-  Найти
-</button>
-
-<button id="btnReset" class="h-12 px-6 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition">
-  Сброс
-</button>
+  </div>
 
 </div>
 
 </div>
-
 </section>
 
-<section class="mt-10">
-<div class="flex justify-between items-center mb-6">
-<h2 class="text-xl font-extrabold">Объекты из базы</h2>
-<div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
-</div>
+<section class="mt-12">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-extrabold">Объекты из базы</h2>
+    <div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
+  </div>
 
-<div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  <div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
 </section>
 
 </main>
+
+<footer class="bg-slate-950 text-white mt-16">
+  <div class="container-wide max-w-[1400px] mx-auto py-10 flex justify-between">
+    <div>
+      <div class="font-extrabold text-lg">NAVI•ESTATE</div>
+      <div class="text-white/60 text-sm mt-2">Новостройки Кыргызстана</div>
+    </div>
+    <div class="text-white/60 text-sm">© 2026</div>
+  </div>
+</footer>
 
 </body>
 </html>
