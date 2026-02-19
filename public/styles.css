@@ -1,0 +1,15 @@
+.hero-bg{
+  background-image: url("/images/lucky-moskva-jk-2204054166-6.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero-overlay{
+  background:
+    linear-gradient(180deg, rgba(2,6,23,0.45) 0%, rgba(2,6,23,0.75) 60%, rgba(2,6,23,0.50) 100%);
+}
+
+@media (max-width: 768px){
+  .hero-bg{ background-position: center top; }
+}
