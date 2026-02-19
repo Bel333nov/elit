@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -98,13 +99,13 @@
       position: relative;
       border-radius: 18px;
       overflow: hidden;
-      margin: 12px 12px 0 12px; /* меньше отступы как у BI */
+      margin: 12px 12px 0 12px;
       background: #e5e7eb;
       isolation: isolate;
     }
     .listing-media img{
       width: 100%;
-      height: 196px; /* чуть ниже по высоте */
+      height: 196px;
       object-fit: cover;
       display:block;
       transform: translateZ(0);
@@ -122,7 +123,7 @@
       left: 10px;
       z-index: 2;
       border-radius: 999px;
-      padding: 6px 10px; /* компактнее */
+      padding: 6px 10px;
       font-size: 12px;
       font-weight: 800;
       line-height: 1;
@@ -134,16 +135,16 @@
     }
 
     .listing-body{
-      padding: 12px; /* меньше отступы */
+      padding: 12px;
       display:flex;
       flex-direction: column;
-      gap: 6px; /* плотнее */
+      gap: 6px;
       flex: 1;
     }
 
-    /* Title size like BI (smaller) */
+    /* Title stays bold */
     .listing-title{
-      font-size: 20px;           /* было 27 */
+      font-size: 20px;
       font-weight: 900;
       letter-spacing: -0.02em;
       color: #0b1220;
@@ -154,10 +155,10 @@
       .listing-title{ font-size: 18px; }
     }
 
-    /* "от • компания" */
+    /* === make all secondary text regular (not bold) === */
     .listing-sub{
-      font-size: 12px;           /* чуть меньше */
-      font-weight: 800;
+      font-size: 12px;
+      font-weight: 500;                 /* было 800 */
       color: rgba(15,23,42,0.62);
       display:flex;
       gap: 8px;
@@ -166,17 +167,16 @@
     }
     .listing-sub .dot{
       color: rgba(15,23,42,0.28);
-      font-weight: 900;
+      font-weight: 500;                 /* было 900 */
     }
 
     .listing-price{
-      font-size: 14px;          /* компактнее как в BI */
-      font-weight: 900;
+      font-size: 14px;
+      font-weight: 600;                 /* было 900 */
       color: #2563eb;
       margin-top: 0px;
     }
 
-    /* === NEW: compact meta row with | and without labels === */
     .listing-meta{
       margin-top: 6px;
       border-top: 1px solid rgba(15,23,42,0.08);
@@ -188,7 +188,7 @@
       gap: 10px;
 
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 500;                 /* было 900 */
       color: rgba(15,23,42,0.78);
     }
     .listing-meta .item{
@@ -196,25 +196,26 @@
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
+      font-weight: 500;                 /* на всякий */
     }
     .listing-meta .divider{
       color: rgba(15,23,42,0.28);
-      font-weight: 900;
+      font-weight: 500;                 /* было 900 */
     }
 
     .listing-actions{
-      padding: 8px 12px 12px 12px; /* меньше отступы у кнопки */
+      padding: 8px 12px 12px 12px;
       margin-top: -2px;
     }
     .btn-more{
       width: 100%;
-      height: 40px;            /* чуть ниже */
-      border-radius: 12px;     /* меньше скругление */
+      height: 40px;
+      border-radius: 12px;
       border: 1px solid rgba(15,23,42,0.14);
       background: #fff;
       font-size: 14px;
-      font-weight: 900;
-      color: rgba(15,23,42,0.86);
+      font-weight: 600;                 /* было 900 */
+      color: rgba(15,23,42,0.82);
       transition: 150ms ease;
       display:flex;
       align-items:center;
@@ -669,7 +670,6 @@
 
               <div class="listing-price">${esc(priceText)}</div>
 
-              <!-- compact row like BI: values only + | dividers -->
               <div class="listing-meta" title="${esc(handover)} | ${esc(city)} | ${esc(address)}">
                 <span class="item">${esc(handover)}</span>
                 <span class="divider">|</span>
@@ -773,3 +773,4 @@
 
 </body>
 </html>
+```
