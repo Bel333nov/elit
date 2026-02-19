@@ -176,33 +176,30 @@
       margin-top: 0px;
     }
 
-    /* 3 columns: сдача / город / адрес */
-    .listing-3col{
-      margin-top: 4px;
+    /* === NEW: compact meta row with | and without labels === */
+    .listing-meta{
+      margin-top: 6px;
       border-top: 1px solid rgba(15,23,42,0.08);
       padding-top: 8px;
 
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      display:flex;
+      flex-wrap: wrap;
+      align-items:center;
       gap: 10px;
+
       font-size: 12px;
-      color: rgba(15,23,42,0.70);
-      font-weight: 700;
-    }
-    .listing-3col .label{
-      display:block;
-      font-size: 11px;
-      color: rgba(15,23,42,0.45);
       font-weight: 900;
-      margin-bottom: 2px;
+      color: rgba(15,23,42,0.78);
     }
-    .listing-3col .value{
-      color: rgba(15,23,42,0.80);
-      font-weight: 900;
+    .listing-meta .item{
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 100%;
+    }
+    .listing-meta .divider{
+      color: rgba(15,23,42,0.28);
+      font-weight: 900;
     }
 
     .listing-actions{
@@ -672,19 +669,13 @@
 
               <div class="listing-price">${esc(priceText)}</div>
 
-              <div class="listing-3col">
-                <div>
-                  <span class="label">Срок сдачи</span>
-                  <div class="value" title="${esc(handover)}">${esc(handover)}</div>
-                </div>
-                <div>
-                  <span class="label">Город</span>
-                  <div class="value" title="${esc(city)}">${esc(city)}</div>
-                </div>
-                <div>
-                  <span class="label">Адрес</span>
-                  <div class="value" title="${esc(address)}">${esc(address)}</div>
-                </div>
+              <!-- compact row like BI: values only + | dividers -->
+              <div class="listing-meta" title="${esc(handover)} | ${esc(city)} | ${esc(address)}">
+                <span class="item">${esc(handover)}</span>
+                <span class="divider">|</span>
+                <span class="item">${esc(city)}</span>
+                <span class="divider">|</span>
+                <span class="item">${esc(address)}</span>
               </div>
             </div>
 
