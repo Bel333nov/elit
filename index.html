@@ -1,704 +1,199 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NAVI•ESTATE — Новостройки</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NAVI•ESTATE — Новостройки</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Font close to BI style: Manrope + Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --pad: 10px;
-      --r-xl: 28px;
-      --r-lg: 22px;
-    }
+<style>
+body{
+  font-family:"Manrope",sans-serif;
+  background:#F3F4F6;
+  color:#0f172a;
+}
 
-    /* Background: light & clean */
-    body{
-      font-family: "Manrope","Inter",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:#0f172a;
-      background:
-        radial-gradient(900px 480px at 18% -10%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(800px 420px at 90% 0%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 55%),
-        linear-gradient(180deg, #F8FAFC 0%, #F3F4F6 40%, #F3F4F6 100%);
-    }
+.container-wide{padding:0 10px;}
+.hairline{border-color:rgba(15,23,42,0.08);}
 
-    .container-wide{ width:100%; padding:0 var(--pad); }
-    .hairline{ border-color: rgba(15,23,42,0.10); }
+.hero-title{
+  font-size:clamp(22px,3vw,38px);
+  font-weight:800;
+  letter-spacing:-0.03em;
+  text-align:center;
+  color:#fff;
+}
 
-    /* Glass */
-    .glass{
-      background: rgba(255,255,255,0.62);
-      border: 1px solid rgba(255,255,255,0.22);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 12px 26px rgba(15,23,42,0.10);
-    }
-    .glass-dark{
-      background: rgba(2,6,23,0.36);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
+.filter-box{
+  background:#fff;
+  border-radius:24px;
+  box-shadow:0 18px 40px rgba(15,23,42,0.08);
+  border:1px solid rgba(15,23,42,0.06);
+}
 
-    /* Hero overlay */
-    .hero-overlay{
-      background:
-        radial-gradient(900px 520px at 20% 0%, rgba(59,130,246,0.18) 0%, rgba(2,6,23,0.0) 55%),
-        radial-gradient(760px 480px at 85% 10%, rgba(99,102,241,0.14) 0%, rgba(2,6,23,0.0) 58%),
-        linear-gradient(180deg, rgba(2,6,23,0.28) 0%, rgba(2,6,23,0.66) 58%, rgba(2,6,23,0.38) 100%);
-    }
+.filter-item{
+  padding:18px 16px;
+  border-right:1px solid rgba(15,23,42,0.08);
+}
 
-    /* Hero title smaller + centered */
-    .hero-title{
-      font-size: clamp(18px, 2.6vw, 36px);
-      line-height: 1.06;
-      letter-spacing: -0.04em;
-      font-weight: 800;
-      color: #fff;
-      text-shadow: 0 10px 30px rgba(2,6,23,0.55);
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
+.filter-item:last-child{border-right:none;}
 
-    /* SEO under title (optional) */
-    .hero-seo{
-      margin-top: 10px;
-      max-width: 860px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-      font-size: 12px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.70);
-      font-weight: 600;
-      text-shadow: 0 10px 30px rgba(2,6,23,0.45);
-    }
+.filter-label{
+  font-size:11px;
+  font-weight:600;
+  color:#64748b;
+}
 
-    /* Cards */
-    .card{
-      border-radius: var(--r-xl);
-      background:#fff;
-      box-shadow: 0 14px 30px rgba(15,23,42,0.07);
-      overflow:hidden;
-    }
-    .card-inner{ padding:14px; }
+.filter-select,
+.filter-input{
+  margin-top:4px;
+  font-size:14px;
+  font-weight:600;
+  width:100%;
+  outline:none;
+  background:transparent;
+}
 
-    .media{
-      border-radius: var(--r-lg);
-      overflow:hidden;
-      background:#E5E7EB;
-      position:relative;
-      isolation:isolate;
-    }
-    .media::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(2,6,23,0.00) 0%, rgba(2,6,23,0.12) 100%);
-      z-index:1;
-      pointer-events:none;
-    }
-    .media img{
-      width:100%;
-      height: 210px;
-      object-fit: cover;
-      display:block;
-    }
+.card{
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 16px 36px rgba(15,23,42,0.08);
+  overflow:hidden;
+}
 
-    /* top tags */
-    .tag-top{
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 7px 11px;
-      line-height: 1;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      white-space: nowrap;
-      max-width: max-content;
-      z-index:2;
-    }
-
-    /* chips */
-    .chip{
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 9px 12px;
-      line-height: 1;
-      color:#0f172a;
-      background:#EFF6FF;
-      border: 1px solid rgba(15,23,42,0.06);
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      white-space: nowrap;
-    }
-
-    /* typography */
-    .title{
-      margin-top: 12px;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.12;
-      color:#0b1220;
-      text-align:left;
-    }
-    .price{
-      margin-top: 8px;
-      font-size: 14px;
-      font-weight: 700;
-      color:#2563eb;
-      text-align:left;
-      display:block;
-    }
-    .addr{
-      margin-top: 8px;
-      font-size: 13px;
-      color: rgba(15,23,42,0.60);
-      text-align:left;
-    }
-    .divider{ margin-top: 12px; border-top: 1px solid rgba(15,23,42,0.10); }
-    .handover{
-      margin-top: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: rgba(15,23,42,0.78);
-      text-align:left;
-    }
-
-    /* Banner */
-    .banner-glass-wrap{
-      height: 450px;
-      border-radius: var(--r-xl);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(15,23,42,0.10);
-      box-shadow: 0 16px 36px rgba(15,23,42,0.10);
-      background: linear-gradient(135deg, rgba(15,23,42,0.08) 0%, rgba(15,23,42,0.03) 100%);
-    }
-    .banner-glass-wrap::before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(520px 280px at 20% 30%, rgba(59,130,246,0.18) 0%, rgba(2,6,23,0) 60%),
-        radial-gradient(520px 280px at 80% 20%, rgba(99,102,241,0.14) 0%, rgba(2,6,23,0) 60%),
-        linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.10) 100%);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      pointer-events:none;
-    }
-    .banner-glass-content{
-      position: relative;
-      height: 100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding: 24px;
-    }
-    .banner-glass-pill{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 12px 16px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 800;
-      color: rgba(15,23,42,0.85);
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(255,255,255,0.22);
-      box-shadow: 0 12px 24px rgba(15,23,42,0.10);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-    .banner-glass-sub{
-      margin-top: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(15,23,42,0.55);
-    }
-
-    /* Header spacing */
-    .header-inner{ max-width: 1400px; margin: 0 auto; padding: 0 var(--pad); }
-  </style>
+.media img{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+}
+</style>
 </head>
 
 <body>
 
-<header class="sticky top-0 z-50 bg-white/85 backdrop-blur border-b hairline">
-  <div class="header-inner">
-    <div class="flex items-center justify-between py-4">
-      <div class="flex items-center gap-10">
-        <a href="#" class="text-lg font-extrabold tracking-tight text-slate-900">NAVI•ESTATE</a>
-        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Новостройки</a>
-          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Районы</a>
-          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Застройщики</a>
-          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Акции</a>
-          <a class="text-slate-700 hover:text-slate-900 transition" href="#">Контакты</a>
-        </nav>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <button class="hidden sm:inline-flex items-center justify-center h-11 w-11 rounded-full border hairline bg-white hover:bg-slate-50 transition">❤</button>
-        <button class="h-11 px-5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition">
-          Подобрать квартиру
-        </button>
-      </div>
-    </div>
+<header class="bg-white border-b hairline sticky top-0 z-50">
+  <div class="container-wide max-w-[1400px] mx-auto flex justify-between items-center py-4">
+    <div class="font-extrabold text-lg">NAVI•ESTATE</div>
+    <button class="h-11 px-6 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition">
+      Подобрать квартиру
+    </button>
   </div>
 </header>
 
-<main class="container-wide">
+<main class="container-wide max-w-[1400px] mx-auto">
 
-  <!-- HERO -->
-  <section class="mt-4">
-    <div class="relative overflow-hidden rounded-[28px] border hairline">
-      <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('hero-bg.png');"></div>
-      <div class="absolute inset-0 hero-overlay"></div>
+<section class="mt-6 relative rounded-[28px] overflow-hidden bg-gradient-to-br from-slate-400 to-slate-700 py-16 px-6">
 
-      <div class="absolute top-4 left-4 z-20">
-        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-dark text-white text-sm font-semibold">
-          📍 Бишкек
-        </button>
-      </div>
+<div class="absolute top-6 left-6">
+  <div class="px-4 py-2 bg-black/30 text-white rounded-xl text-sm font-semibold">
+    📍 Бишкек
+  </div>
+</div>
 
-      <div class="relative z-10 px-6 md:px-12 py-10 md:py-12">
-        <h1 class="hero-title">Поиск премиальной недвижимости</h1>
+<h1 class="hero-title">
+  Поиск премиальной недвижимости
+</h1>
 
-        <div class="hero-seo">
-          Подбор новостроек в Бишкеке, Оше и на Ыссык-Куле: проверка документов, классы Комфорт+ / Бизнес / Премиум, цены и сроки сдачи.
-        </div>
+<div class="mt-8 filter-box overflow-hidden">
 
-        <!-- FILTER -->
-        <div class="mt-7">
-          <div class="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-lg">
+<!-- 14 column grid -->
+<div class="grid grid-cols-1 md:grid-cols-14">
 
-            <!-- top row -->
-            <div class="grid grid-cols-1 md:grid-cols-12">
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Город</label>
+<select id="fCity" class="filter-select">
+<option value="">Любой</option>
+</select>
+</div>
 
-              <!-- Город -->
-              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
-                <label class="block text-[11px] font-semibold text-slate-500">Город</label>
-                <select id="fCity" class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
-                  <option value="">Любой</option>
-                </select>
-              </div>
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Тип недвижимости</label>
+<select class="filter-select">
+<option>Любой</option>
+<option>Квартиры</option>
+<option>Коммерческие помещения</option>
+<option>Танхаусы</option>
+</select>
+</div>
 
-              <!-- Тип (пока не фильтруем, оставил как есть) -->
-              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
-                <label class="block text-[11px] font-semibold text-slate-500">Тип недвижимости</label>
-                <select id="fType" class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
-                  <option value="" selected>Любой</option>
-                  <option>Квартиры</option>
-                  <option>Коммерческие помещения</option>
-                  <option>Танхаусы</option>
-                </select>
-              </div>
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Класс объекта</label>
+<select id="fClass" class="filter-select">
+<option value="">Любой</option>
+</select>
+</div>
 
-              <!-- Класс объекта -->
-              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
-                <label class="block text-[11px] font-semibold text-slate-500">Класс объекта</label>
-                <select id="fClass" class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
-                  <option value="">Любой</option>
-                </select>
-              </div>
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Топ застройщики</label>
+<select id="fDev" class="filter-select">
+<option value="">Любой</option>
+</select>
+</div>
 
-              <!-- Застройщик -->
-              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
-                <label class="block text-[11px] font-semibold text-slate-500">Топ застройщики</label>
-                <select id="fDev" class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
-                  <option value="">Любой</option>
-                </select>
-              </div>
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Срок сдачи</label>
+<select id="fYear" class="filter-select">
+<option value="">Любой</option>
+</select>
+</div>
 
-              <!-- Срок сдачи -->
-              <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
-                <label class="block text-[11px] font-semibold text-slate-500">Срок сдачи</label>
-                <select id="fYear" class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
-                  <option value="">Любой</option>
-                </select>
-              </div>
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Разрешительные документы</label>
+<select class="filter-select">
+<option>Любые</option>
+<option>Красная книга</option>
+<option>Зелёная книга</option>
+<option>Разрешение на строительство</option>
+<option>Экспертиза проекта</option>
+</select>
+</div>
 
-              <!-- Цена -->
-              <div class="md:col-span-2 px-4 py-4">
-                <label class="block text-[11px] font-semibold text-slate-500">Цена ($/м²)</label>
-                <div class="mt-1 grid grid-cols-2 gap-3">
-                  <input id="fPriceFrom" class="w-full outline-none text-sm font-semibold text-slate-800" placeholder="от" inputmode="numeric" />
-                  <input id="fPriceTo" class="w-full outline-none text-sm font-semibold text-slate-800" placeholder="до" inputmode="numeric" />
-                </div>
-              </div>
-            </div>
+<div class="filter-item md:col-span-2">
+<label class="filter-label">Цена ($/м²)</label>
+<div class="grid grid-cols-2 gap-2 mt-1">
+<input id="fPriceFrom" class="filter-input" placeholder="от" />
+<input id="fPriceTo" class="filter-input" placeholder="до" />
+</div>
+</div>
 
-            <!-- docs row (оставил как было) -->
-            <div class="border-t border-slate-200">
-              <div class="grid grid-cols-1 md:grid-cols-12">
-                <div class="md:col-span-4 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
-                  <label class="block text-[11px] font-semibold text-slate-500">Разрешительные документы</label>
-                  <select class="mt-1 w-full outline-none text-sm font-semibold text-slate-800 bg-transparent">
-                    <option selected>Любые</option>
-                    <option>Красная книга (риски)</option>
-                    <option>Зелёная книга (проверено)</option>
-                    <option>Право на землю</option>
-                    <option>Госакт / собственность</option>
-                    <option>Разрешение на строительство</option>
-                    <option>Проектная декларация</option>
-                    <option>Экспертиза проекта</option>
-                    <option>Технические условия (ТУ)</option>
-                  </select>
-                </div>
+</div>
 
-                <div class="md:col-span-8 px-4 py-4">
-                  <div class="flex flex-col lg:flex-row lg:items-center gap-4">
-                    <div class="flex flex-wrap gap-5">
-                      <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
-                        Все разрешительные документы
-                      </label>
-                      <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
-                        В ипотеку
-                      </label>
-                      <label class="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
-                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300" />
-                        Акции
-                      </label>
-                    </div>
+<!-- bottom row buttons -->
+<div class="border-t border-slate-200 px-6 py-4 flex flex-wrap gap-4 items-center justify-end">
 
-                    <div class="lg:ml-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                      <button class="h-12 px-6 rounded-xl bg-white text-slate-900 font-semibold border border-slate-200 hover:bg-slate-50 transition">
-                        Показать на карте
-                      </button>
-                      <button id="btnFind" class="h-12 px-8 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
-                        Найти
-                      </button>
-                      <button id="btnReset" class="h-12 px-6 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition">
-                        Сброс
-                      </button>
-                    </div>
-                  </div>
+<button class="h-12 px-6 min-w-[200px] whitespace-nowrap rounded-xl bg-white border border-slate-200 font-semibold hover:bg-slate-50 transition">
+  Показать на карте
+</button>
 
-                  <div class="mt-3 text-[12px] text-slate-500">
-                    Фильтры берутся из Airtable автоматически.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /docs row -->
+<button id="btnFind" class="h-12 px-8 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+  Найти
+</button>
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<button id="btnReset" class="h-12 px-6 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition">
+  Сброс
+</button>
 
-  <!-- Controls -->
-  <section class="py-5">
-    <div class="flex flex-col md:flex-row md:items-center gap-4">
-      <label class="inline-flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border hairline">
-        <input type="checkbox" class="h-5 w-5 rounded border hairline" />
-        <span class="text-sm font-semibold text-slate-800">Сгруппировать по бигвиллям</span>
-      </label>
+</div>
 
-      <div class="flex-1 bg-white rounded-2xl px-4 py-3 border hairline flex items-center gap-3">
-        <span class="text-slate-400">🔎</span>
-        <input id="fSearch" class="w-full outline-none text-sm" placeholder="Поиск по названию / застройщику" />
-      </div>
-    </div>
-  </section>
+</div>
 
-  <!-- Banner (оставил) -->
-  <section class="pb-10">
-    <div class="banner-glass-wrap">
-      <div class="banner-glass-content">
-        <div>
-          <div class="banner-glass-pill">Рекламный баннер</div>
-          <div class="banner-glass-sub">Стеклянный эффект. Высота 450px.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+</section>
 
-  <!-- Airtable Listings (auto) -->
-  <section class="pb-12">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-extrabold text-slate-900">Объекты из базы</h2>
-      <div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
-    </div>
+<section class="mt-10">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-xl font-extrabold">Объекты из базы</h2>
+<div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
+</div>
 
-    <div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-  </section>
-
-  <script>
-    (function () {
-      const grid = document.getElementById("airtableGrid");
-      const statusEl = document.getElementById("airtableStatus");
-
-      const elCity = document.getElementById("fCity");
-      const elClass = document.getElementById("fClass");
-      const elDev = document.getElementById("fDev");
-      const elYear = document.getElementById("fYear");
-      const elPriceFrom = document.getElementById("fPriceFrom");
-      const elPriceTo = document.getElementById("fPriceTo");
-      const elSearch = document.getElementById("fSearch");
-      const btnFind = document.getElementById("btnFind");
-      const btnReset = document.getElementById("btnReset");
-
-      let allRecords = [];
-
-      function esc(s) {
-        return String(s ?? "").replace(/[&<>"']/g, c => ({
-          "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
-        }[c]));
-      }
-
-      function norm(s) {
-        return String(s ?? "").trim().toLowerCase();
-      }
-
-      function getField(obj, keys) {
-        for (const k of keys) {
-          if (obj && obj[k] != null && obj[k] !== "") return obj[k];
-        }
-        return "";
-      }
-
-      // Airtable поля (по твоим скринам)
-      function fCity(rec){ return getField(rec, ["city"]); }
-      function fClassObject(rec){ return getField(rec, ["class_object"]); } // "Комфорт+"
-      function fDeveloper(rec){ return getField(rec, ["developer"]); }
-      function fHandover(rec){ return getField(rec, ["handover"]); } // "3 кв. 2028 г."
-      function fName(rec){ return getField(rec, ["name"]); }
-      function fLink(rec){ return getField(rec, ["Ссылка", "link", "url"]); }
-      function fPhoto(rec){ return getField(rec, ["photo_link"]); }
-      function fPriceM2Text(rec){ return getField(rec, ["price_m2"]); } // "от 1150$ ( ... )"
-
-      function parseNumber(v) {
-        const s = String(v ?? "").replace(",", ".").replace(/[^\d.]/g, "");
-        if (!s) return null;
-        const n = Number(s);
-        return Number.isFinite(n) ? n : null;
-      }
-
-      function priceValue(rec){
-        // из "от 1150$ (100568 c)" достанем 1150
-        const t = fPriceM2Text(rec);
-        // сначала попробуем найти число после "от"
-        const m = String(t || "").match(/от\s*([\d\s.,]+)/i);
-        if (m && m[1]) {
-          const n = parseNumber(m[1]);
-          if (n != null) return n;
-        }
-        // иначе просто первое число
-        const n = parseNumber(t);
-        return n;
-      }
-
-      function extractYear(text){
-        const m = String(text ?? "").match(/(20\d{2})/);
-        return m ? Number(m[1]) : null;
-      }
-
-      function sortObjects(items) {
-        return [...items].sort((a, b) => {
-          const byCity = norm(fCity(a)).localeCompare(norm(fCity(b)), "ru");
-          if (byCity !== 0) return byCity;
-
-          const byClass = norm(fClassObject(a)).localeCompare(norm(fClassObject(b)), "ru");
-          if (byClass !== 0) return byClass;
-
-          const ya = extractYear(fHandover(a)) ?? 9999;
-          const yb = extractYear(fHandover(b)) ?? 9999;
-          if (ya !== yb) return ya - yb;
-
-          const pa = priceValue(a);
-          const pb = priceValue(b);
-          if (pa == null && pb == null) return 0;
-          if (pa == null) return 1;
-          if (pb == null) return -1;
-          return pa - pb;
-        });
-      }
-
-      function cardHTML(rec) {
-        const title = fName(rec) || "Без названия";
-        const href = fLink(rec) || "#";
-        const img = fPhoto(rec) || "hero-bg.png";
-        const badge = fClassObject(rec) || "Объект";
-        const city = fCity(rec);
-        const dev = fDeveloper(rec);
-        const addr = [city, dev].filter(Boolean).join(" • ");
-        const handover = fHandover(rec);
-        const p = priceValue(rec);
-        const priceText = (p != null) ? `от $${p} за м²` : (fPriceM2Text(rec) ? String(fPriceM2Text(rec)) : "—");
-
-        return `
-          <article class="card">
-            <div class="card-inner">
-              <div class="media">
-                <img src="${esc(img)}" alt="${esc(title)}" />
-                <div class="absolute top-3 left-3 flex flex-col items-start gap-2">
-                  <span class="tag-top glass-dark text-white">${esc(badge)}</span>
-                </div>
-              </div>
-
-              <div class="title">${esc(title)}</div>
-              <a href="${esc(href)}" target="_blank" rel="noopener" class="price">${esc(priceText)}</a>
-              <div class="addr">${esc(addr)}</div>
-
-              <div class="divider"></div>
-              <div class="handover">${esc(handover ? ("Сдача: " + handover) : "Срок сдачи: —")}</div>
-            </div>
-          </article>
-        `;
-      }
-
-      function setOptions(selectEl, values, keepFirstOptionText = "Любой") {
-        const current = selectEl.value;
-        selectEl.innerHTML = `<option value="">${keepFirstOptionText}</option>` +
-          values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
-        // попробуем сохранить выбор
-        if (current) {
-          const exists = values.some(v => String(v) === String(current));
-          if (exists) selectEl.value = current;
-        }
-      }
-
-      function buildFilterOptions(records) {
-        const cities = Array.from(new Set(records.map(fCity).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ru"));
-        const classes = Array.from(new Set(records.map(fClassObject).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ru"));
-        const devs = Array.from(new Set(records.map(fDeveloper).filter(Boolean))).sort((a,b)=>a.localeCompare(b,"ru"));
-        const years = Array.from(new Set(records.map(r => extractYear(fHandover(r))).filter(Boolean))).sort((a,b)=>a-b).map(String);
-
-        setOptions(elCity, cities, "Любой");
-        setOptions(elClass, classes, "Любой");
-        setOptions(elDev, devs, "Любой");
-        setOptions(elYear, years, "Любой");
-      }
-
-      function applyFilters(records) {
-        const city = elCity.value.trim();
-        const cls = elClass.value.trim();
-        const dev = elDev.value.trim();
-        const year = elYear.value.trim();
-        const pFrom = parseNumber(elPriceFrom.value);
-        const pTo = parseNumber(elPriceTo.value);
-        const q = norm(elSearch.value);
-
-        return records.filter(rec => {
-          if (city && norm(fCity(rec)) !== norm(city)) return false;
-          if (cls && norm(fClassObject(rec)) !== norm(cls)) return false;
-          if (dev && norm(fDeveloper(rec)) !== norm(dev)) return false;
-
-          if (year) {
-            const ry = extractYear(fHandover(rec));
-            if (!ry || String(ry) !== String(year)) return false;
-          }
-
-          const pv = priceValue(rec);
-          if (pFrom != null) {
-            if (pv == null) return false;
-            if (pv < pFrom) return false;
-          }
-          if (pTo != null) {
-            if (pv == null) return false;
-            if (pv > pTo) return false;
-          }
-
-          if (q) {
-            const text = norm(`${fName(rec)} ${fDeveloper(rec)} ${fCity(rec)}`);
-            if (!text.includes(q)) return false;
-          }
-
-          return true;
-        });
-      }
-
-      function render(records) {
-        const sorted = sortObjects(records);
-        statusEl.textContent = `Найдено: ${sorted.length}`;
-        grid.innerHTML = sorted.slice(0, 48).map(cardHTML).join("");
-      }
-
-      function refresh() {
-        const filtered = applyFilters(allRecords);
-        render(filtered);
-      }
-
-      function resetFilters() {
-        elCity.value = "";
-        elClass.value = "";
-        elDev.value = "";
-        elYear.value = "";
-        elPriceFrom.value = "";
-        elPriceTo.value = "";
-        elSearch.value = "";
-        refresh();
-      }
-
-      async function load() {
-        try {
-          statusEl.textContent = "Загрузка…";
-          const r = await fetch("/api/airtable", { cache: "no-store" });
-          const data = await r.json();
-
-          if (!r.ok) {
-            statusEl.textContent = "Ошибка загрузки";
-            grid.innerHTML = `<div class="text-sm text-red-600">Ошибка: ${esc(data?.error || "unknown")}</div>`;
-            return;
-          }
-
-          const records = Array.isArray(data?.records) ? data.records : [];
-          if (!records.length) {
-            statusEl.textContent = "Пусто";
-            grid.innerHTML = `<div class="text-sm text-slate-600">В базе пока нет записей.</div>`;
-            return;
-          }
-
-          allRecords = records;
-          buildFilterOptions(allRecords);
-          refresh();
-
-        } catch (e) {
-          statusEl.textContent = "Ошибка";
-          grid.innerHTML = `<div class="text-sm text-red-600">Ошибка: ${esc(e?.message || e)}</div>`;
-        }
-      }
-
-      // события
-      btnFind.addEventListener("click", refresh);
-      btnReset.addEventListener("click", resetFilters);
-
-      [elCity, elClass, elDev, elYear].forEach(el => el.addEventListener("change", refresh));
-      [elPriceFrom, elPriceTo, elSearch].forEach(el => el.addEventListener("input", refresh));
-
-      load();
-    })();
-  </script>
+<div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+</section>
 
 </main>
-
-<footer class="bg-slate-950 text-white mt-6">
-  <div class="container-wide py-10">
-    <div class="flex flex-col md:flex-row items-start justify-between gap-6">
-      <div>
-        <div class="text-lg font-extrabold tracking-tight">NAVI•ESTATE</div>
-        <div class="text-white/70 text-sm mt-2">Новостройки Кыргызстана — удобно и красиво.</div>
-      </div>
-      <div class="text-white/70 text-sm">© 2026 • Политика • Пользовательское соглашение</div>
-    </div>
-  </div>
-</footer>
 
 </body>
 </html>
