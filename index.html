@@ -54,12 +54,25 @@
       -webkit-backdrop-filter: blur(12px);
     }
 
-    /* Hero overlay (default) */
+    /* ✅ HERO background (через класс — 100% сработает) */
+    .hero-bg{
+      background-image: url("/images/hero.jpg"); /* <-- поменяй, если файл иначе называется */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* ✅ Hero overlay — усилили, чтобы текст читался */
     .hero-overlay{
       background:
-        radial-gradient(900px 520px at 20% 0%, rgba(59,130,246,0.18) 0%, rgba(2,6,23,0.0) 55%),
-        radial-gradient(760px 480px at 85% 10%, rgba(99,102,241,0.14) 0%, rgba(2,6,23,0.0) 58%),
-        linear-gradient(180deg, rgba(2,6,23,0.28) 0%, rgba(2,6,23,0.66) 58%, rgba(2,6,23,0.38) 100%);
+        linear-gradient(180deg,
+          rgba(2,6,23,0.48) 0%,
+          rgba(2,6,23,0.78) 60%,
+          rgba(2,6,23,0.55) 100%);
+    }
+
+    @media (max-width: 768px){
+      .hero-bg{ background-position: center top; }
     }
 
     .hero-title{
@@ -149,7 +162,6 @@
       flex: 1;
     }
 
-    /* Title stays bold */
     .listing-title{
       font-size: 20px;
       font-weight: 900;
@@ -162,7 +174,6 @@
       .listing-title{ font-size: 18px; }
     }
 
-    /* secondary text regular */
     .listing-sub{
       font-size: 12px;
       font-weight: 500;
@@ -188,12 +199,10 @@
       margin-top: 6px;
       border-top: 1px solid rgba(15,23,42,0.08);
       padding-top: 8px;
-
       display:flex;
       flex-wrap: wrap;
       align-items:center;
       gap: 10px;
-
       font-size: 12px;
       font-weight: 500;
       color: rgba(15,23,42,0.78);
@@ -232,7 +241,6 @@
       background: rgba(15,23,42,0.03);
     }
 
-    /* Banner inside grid (after first 4) */
     .grid-banner{
       border-radius: 22px;
       position: relative;
@@ -281,36 +289,6 @@
       font-weight: 900;
       color: rgba(15,23,42,0.55);
     }
-
-    /* =========================================================
-       ✅ HERO background-image + overlay (only CSS, no HTML/JS)
-       ВАЖНО: путь /public/images/.... => url("/images/....")
-       Сейчас ставим фоном hero.jpg (замени на свой файл если нужно)
-       ========================================================= */
-
-    /* 1) Replace current hero background image (overrides inline style) */
-    main.container-wide section.mt-4 > div.relative.overflow-hidden.rounded-\[28px\] > div.absolute.inset-0.bg-cover.bg-center{
-      background-image: url("/images/hero.jpg") !important;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    /* 2) Dark overlay stronger for readability */
-    main.container-wide section.mt-4 > div.relative.overflow-hidden.rounded-\[28px\] > div.absolute.inset-0.hero-overlay{
-      background:
-        linear-gradient(180deg,
-          rgba(2,6,23,0.40) 0%,
-          rgba(2,6,23,0.72) 60%,
-          rgba(2,6,23,0.45) 100%);
-    }
-
-    /* 3) Mobile tweak so composition looks аккуратно */
-    @media (max-width: 768px) {
-      main.container-wide section.mt-4 > div.relative.overflow-hidden.rounded-\[28px\] > div.absolute.inset-0.bg-cover.bg-center{
-        background-position: center top;
-      }
-    }
   </style>
 </head>
 
@@ -346,9 +324,8 @@
   <section class="mt-4">
     <div class="relative overflow-hidden rounded-[28px] border hairline">
 
-      <!-- остаётся как есть, CSS выше перебьёт картинку через !important -->
-      <div class="absolute inset-0 bg-cover bg-center"
-           style="background-image:url('/images/lucky-moskva-jk-2204054166-6.jpg');"></div>
+      <!-- ✅ ИЗМЕНЕНО: теперь фон задаётся классом hero-bg -->
+      <div class="absolute inset-0 hero-bg"></div>
 
       <div class="absolute inset-0 hero-overlay"></div>
 
@@ -369,7 +346,6 @@
         <div class="mt-7">
           <div class="bg-white rounded-2xl overflow-hidden border border-black/5 shadow-lg">
 
-            <!-- top row -->
             <div class="grid grid-cols-1 md:grid-cols-12">
 
               <div class="md:col-span-2 px-4 py-4 border-b md:border-b-0 md:border-r border-slate-200">
@@ -419,7 +395,6 @@
               </div>
             </div>
 
-            <!-- bottom row -->
             <div class="border-t border-slate-200">
               <div class="px-4 py-4">
                 <div class="flex flex-col lg:flex-row lg:items-center gap-4">
@@ -457,7 +432,6 @@
     </div>
   </section>
 
-  <!-- Controls (✅ less vertical space) -->
   <section class="py-3">
     <div class="flex flex-col md:flex-row md:items-center gap-4">
       <label class="inline-flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border hairline">
@@ -472,14 +446,12 @@
     </div>
   </section>
 
-  <!-- Airtable Listings (✅ less bottom space) -->
   <section class="pb-8">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-lg font-extrabold text-slate-900">Объекты из базы</h2>
       <div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
     </div>
 
-    <!-- ✅ cards closer: smaller gap -->
     <div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"></div>
   </section>
 
