@@ -29,7 +29,14 @@
         linear-gradient(180deg, #EEF2F7 0%, #E9EEF5 55%, #E7ECF3 100%);
     }
 
-    .container-wide{ width:100%; padding:0 var(--pad); }
+    /* ✅ make layout more "tight": limit width + center */
+    .container-wide{
+      width:100%;
+      max-width: 1400px;   /* можно 1320px если хочешь ещё плотнее */
+      margin: 0 auto;
+      padding:0 var(--pad);
+    }
+
     .hairline{ border-color: rgba(15,23,42,0.10); }
 
     /* Glass */
@@ -418,8 +425,8 @@
     </div>
   </section>
 
-  <!-- Controls -->
-  <section class="py-5">
+  <!-- Controls (✅ less vertical space) -->
+  <section class="py-3">
     <div class="flex flex-col md:flex-row md:items-center gap-4">
       <label class="inline-flex items-center gap-3 bg-white rounded-2xl px-4 py-3 border hairline">
         <input type="checkbox" class="h-5 w-5 rounded border hairline" />
@@ -433,15 +440,15 @@
     </div>
   </section>
 
-  <!-- Airtable Listings -->
-  <section class="pb-12">
+  <!-- Airtable Listings (✅ less bottom space) -->
+  <section class="pb-8">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-lg font-extrabold text-slate-900">Объекты из базы</h2>
       <div id="airtableStatus" class="text-sm text-slate-500">Загрузка…</div>
     </div>
 
-    <!-- ✅ GAP like your 2nd screenshot (more air between cards) -->
-    <div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+    <!-- ✅ cards closer: smaller gap -->
+    <div id="airtableGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"></div>
   </section>
 
   <script>
@@ -514,7 +521,7 @@
       }
 
       function extractYear(text){
-        const m = String(text ?? "").match(/(20\d{2})/);
+        const m = String(text ?? "").match(/(20\\d{2})/);
         return m ? Number(m[1]) : null;
       }
 
